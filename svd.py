@@ -7,9 +7,9 @@ import pandas as pd
 import csv
 
 # Loading the trainset
-dftrain= pd.read_csv('train_rating.txt')
+dftrain= pd.read_csv('data/train_rating.txt')
 # Loading the testset
-dftest = pd.read_csv('test_rating.txt')
+dftest = pd.read_csv('data/test_rating.txt')
 # The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
 reader = Reader(rating_scale=(0, 5),sep=',')
 #Pre-processing trainset to drop 2 columns
