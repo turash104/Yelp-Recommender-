@@ -7,11 +7,19 @@ import pandas as pd
 import csv
 
 # Loading the trainset
+<<<<<<< HEAD
 dftrain= pd.read_csv('train_rating.txt')
 # Loading the testset
 dftest = pd.read_csv('test_rating.txt')
 # The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
 reader = Reader(rating_scale=(1, 5),sep=',')
+=======
+dftrain= pd.read_csv('data/train_rating.txt')
+# Loading the testset
+dftest = pd.read_csv('data/test_rating.txt')
+# The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
+reader = Reader(rating_scale=(0, 5),sep=',')
+>>>>>>> ed07ab91e560a72b2e3167d2d8e6b9d8e8c0b594
 #Pre-processing trainset to drop 2 columns
 dftrain.drop('train_id',1)
 dftrain.drop('date',1)
@@ -24,6 +32,7 @@ dftest['rating'] = 0
 #Creating a Dataset object for both train and test sets
 datatrain = Dataset.load_from_df(dftrain[['user_id', 'business_id', 'rating']], reader)
 datatest = Dataset.load_from_df(dftest[['user_id', 'business_id','rating']], reader)
+<<<<<<< HEAD
 datatrain.split(n_folds=5)
 
 param_grid = {'n_epochs': [5, 10, 15], 'lr_all': [0.002, 0.005, 0.008],
@@ -38,16 +47,23 @@ print(grid_search.best_score['RMSE'])
 print(grid_search.best_params['RMSE'])
 # >>> {'reg_all': 0.4, 'lr_all': 0.005, 'n_epochs': 10}
 
+=======
+>>>>>>> ed07ab91e560a72b2e3167d2d8e6b9d8e8c0b594
 # Building the trainset
 trainset=datatrain.build_full_trainset()
 # Building the testset like the we built the trainset -- prolly can do away with this step:
 testset=datatest.build_full_trainset()
 # Building the testset
 testset=testset.build_testset()
+<<<<<<< HEAD
 grid_search.evaluate(datatrain)
 
 #creating the algo object: In this case it's an SVD type. This is where the various parameters need to be passed
 algo = grid_search.best_estimator['RMSE']
+=======
+#creating the algo object: In this case it's an SVD type. This is where the various parameters need to be passed
+algo = SVD(n_factors=101,biased=True)
+>>>>>>> ed07ab91e560a72b2e3167d2d8e6b9d8e8c0b594
 # Training the algorithm using the full train set
 algo.train(trainset)
 # Making the predictions
@@ -60,3 +76,7 @@ with open('predicted_rating_grid.csv', 'w') as csvfile:
     for idx, row in enumerate(predictions):
         print(row[3])
         writer.writerow({'test_id': idx, 'rating': row[3]})
+<<<<<<< HEAD
+=======
+
+>>>>>>> ed07ab91e560a72b2e3167d2d8e6b9d8e8c0b594
