@@ -12,7 +12,14 @@ dftrain = pd.read_csv('train_rating.txt')
 dftest = pd.read_csv('test_rating.txt')
 
 # The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
-reader = Reader(rating_scale=(1, 5), sep=',')
+reader = Reader(rating_scale=(1, 5),sep=',')
+
+dftrain= pd.read_csv('data/train_rating.txt')
+# Loading the testset
+dftest = pd.read_csv('data/test_rating.txt')
+# The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
+reader = Reader(rating_scale=(0, 5),sep=',')
+
 #Pre-processing trainset to drop 2 columns
 dftrain.drop('train_id', 1)
 dftrain.drop('date', 1)
@@ -47,32 +54,32 @@ print(grid_search.best_score['RMSE'])
 print(grid_search.best_params['RMSE'])
 # >>> {'reg_all': 0.4, 'lr_all': 0.005, 'n_epochs': 10}
 
+
 # Building the trainset
 trainset = datatrain.build_full_trainset()
 # Building the testset like the we built the trainset -- prolly can do away with this step:
 testset = datatest.build_full_trainset()
 # Building the testset
-testset = testset.build_testset()
+testset=testset.build_testset()
+
 grid_search.evaluate(datatrain)
 
-# creating the algo object: In this case it's an SVD type. This is where the various parameters need to be passed
-# algo = grid_search.best_estimator['RMSE']
-algo = SVD()
+#creating the algo object: In this case it's an SVD type. This is where the various parameters need to be passed
+algo = grid_search.best_estimator['RMSE']
+
+#creating the algo object: In this case it's an SVD type. This is where the various parameters need to be passed
+algo = SVD(n_factors=101,biased=True)
+
 # Training the algorithm using the full train set
 algo.train(trainset)
 # Making the predictions
 predictions = algo.predict(testset)
 predictions = pd.DataFrame(predictions)
 # Printing the predictions into a file with submission format
-
-predictions.to_csv("predictions.csv")
-
-
-
-# with open('predicted_rating_grid.csv', 'w') as csvfile:
-#     fieldnames = ['test_id', 'rating']
-#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator = '\n')
-#     writer.writeheader()
-#     for idx, row in enumerate(predictions):
-#         print(row[3])
-#         writer.writerow({'test_id': idx, 'rating': row[3]})
+with open('predicted_rating_grid.csv', 'w') as csvfile:
+    fieldnames = ['test_id', 'rating']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator = '\n')
+    writer.writeheader()
+    for idx, row in enumerate(predictions):
+        print(row[3])
+        writer.writerow({'test_id': idx, 'rating': row[3]})
