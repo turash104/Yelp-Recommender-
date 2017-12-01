@@ -13,8 +13,8 @@ dftest = pd.read_csv('data/test_rating.txt')
 # The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
 reader = Reader(rating_scale=(0, 5),sep=',')
 #Pre-processing trainset to drop 2 columns
-dftrain.drop('train_id',1)
-dftrain.drop('date',1)
+dftrain.drop('train_id', 1)
+dftrain.drop('date', 1)
 #Pre-processing testset to drop 2 columns
 dftest.drop('test_id',1)
 dftest.drop('date',1)
