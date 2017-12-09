@@ -23,10 +23,12 @@ reader = Reader(rating_scale=(0, 5),sep=',')
 #Pre-processing trainset to drop 2 columns
 dftrain.drop('train_id', 1)
 dftrain.drop('date', 1)
+
 # Pre-processing testset to drop 2 columns
 dftest.drop('test_id', 1)
 dftest.drop('date', 1)
 # Pre-processing testset to add a dummy column containing rating = 0 as the last column
+
 dftest['rating'] = 0
 
 # dftrain = dftrain.sample(frac=1)
