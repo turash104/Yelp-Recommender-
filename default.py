@@ -29,6 +29,7 @@ for key in user_keys:
     user_profile[key] = user_profile[key] / user_profile_count[key]
 
 business_keys = business_profile.keys()
+print(len(business_profile))
 for key in business_keys:
     business_profile[key] = business_profile[key] / business_profile_count[key]
 
