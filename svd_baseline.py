@@ -1,4 +1,3 @@
-# %%
 import optparse, sys, os, logging
 from surprise import SVD
 from surprise import dataset
@@ -8,9 +7,7 @@ import pandas as pd
 import csv
 
 
-# Loading the trainset
 dftrain = pd.read_csv('train_rating.txt')
-# Loading the testset
 dftest = pd.read_csv('test_rating.txt')
 
 # The Reader class is used to parse a file containing ratings - one rating per line with a fixed structure
