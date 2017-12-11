@@ -1,7 +1,8 @@
 from clustering.gsdmm import MovieGroupProcess
 import pandas as pd
 from collections import defaultdict
-
+import json
+import numpy as np
 
 def compute_V(texts):
     V = set()
@@ -54,13 +55,14 @@ docs["cluster_id"] = output_Vector
 # docs
 
 cluster_dict = {}
-
 for cluster_id, t_ids in zip(docs['cluster_id'],docs['id']):
-    print(cluster_id,t_ids)
+    cluster_id = str(cluster_id)
+    # print(cluster_id,t_ids)
     if cluster_id not in cluster_dict:
-        cluster_dict[cluster_id] = t_ids
+        cluster_dict[cluster_id] = [str(j) for j in t_ids]
     else:
-        for x in t_ids:
-            cluster_dict[cluster_id].append(x)
-
-print( cluster_dict)
+        for j in t_ids:
+            j = str(j)
+            cluster_dict[cluster_id].append(j)
+with open('clusters.json','w') as fp:
+    print(json.dumps(cluster_dict), file = fp)
