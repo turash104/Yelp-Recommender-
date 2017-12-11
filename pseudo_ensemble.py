@@ -3,9 +3,9 @@ from surprise import SVD, SVDpp, NMF, SlopeOne, KNNBasic, KNNWithMeans, KNNBasel
 import pandas as pd
 
 # Loading Dataset
-dftrain = pd.read_csv('train_rating_small.txt')
+dftrain = pd.read_csv('train_rating.txt')
 datatrain = Dataset.load_from_df(dftrain[['user_id', 'business_id', 'rating']], reader=Reader())
-datatrain.split(n_folds=10)
+datatrain.split(n_folds=5)
 '''
 param_grid = {'bsl_options': {'method': ['als', 'sgd'],
                               'reg': [1, 2]},
